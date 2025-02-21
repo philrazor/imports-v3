@@ -24,7 +24,17 @@ def register(request):
 
 def login_user(request):
     # Login logic
-    return render(request, 'coreApp/login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('core')
+        else:
+            return JsonResponse({'error': 'Invalid credentials'})
+    return render(request, 'coreApp/login_user.html')
 
 def logout_user(request):
     # Logout logic
@@ -47,5 +57,8 @@ def product_list(request):
     return render(request, 'coreApp/product_list.html', {'parts': parts})
 
 
+def detail(request, pk):
+    part = Product.objects.get(pk=pk)
+    return render(request, 'coreApp/detail.html', {'part': part})
 
 

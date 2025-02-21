@@ -35,15 +35,25 @@
         </nav>
     </header>
     <div class="navigation">
+        {% if user.is_authenticated %}
         <ul class="nav-links">
             <li><a href="#"><i class="fas fa-box"></i> Products</a></li>
             <li><a href="#"><i class="fas fa-car"></i> Brands</a></li>
             <li><a href="#"><i class="fas fa-wallet"></i> Finances</a></li>
             <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
             <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-            <li><a href="#" class="btn login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+        {% else %}
+        <ul class="nav-links">
+            <li><a href="#"><i class="fas fa-box"></i> Products</a></li>
+            <li><a href="#"><i class="fas fa-car"></i> Brands</a></li>
+            <li><a href="#"><i class="fas fa-wallet"></i> Finances</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{% url 'coreApp:login_user' %}" class="btn login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
             <li><a href="#" class="btn signup-btn"><i class="fas fa-user-plus"></i> Signup</a></li>
         </ul>
+        {% endif %}
     </div>
     
     
@@ -81,6 +91,7 @@
         <div class="product-list">
             {% for product in products %}
                 <div class="product-item">
+                    <a href="{% url 'coreApp:detail' product.id %}"></a>
                     {% if product.images.all %}
                         <img src="{{ product.images.first.image.url }}" alt="{{ product.product_name }}" class="product-image">
                     {% else %}
@@ -127,9 +138,12 @@
             <div class="footer-social">
                 <h4>Follow Us</h4>
                 <div class="social-icons">
-                    <a href="#" class="social-icon">Tiktok</a>
-                    <a href="#" class="social-icon">facebook</a>
-                    <a href="#" class="social-icon">Instagram</a>
+                    <ul class="social-icons">
+                        <li><a href="https://www.tiktok.com/search?lang=en&q=berlin%20imports&t=1740075684277" target="_blank"><i class="fab fa-tiktok tiktok-icon"></i></a></li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook facebook-icon"></i></a></li>
+                        <li><a href="https://x.com" target="_blank"><i class="fab fa-x-twitter x-icon"></i></a></li>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram instagram-ico"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
