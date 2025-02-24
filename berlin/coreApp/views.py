@@ -31,7 +31,7 @@ def login_user(request):
         
         if user is not None:
             login(request, user)
-            return redirect('core')
+            return redirect('index')
         else:
             return JsonResponse({'error': 'Invalid credentials'})
     return render(request, 'coreApp/login_user.html')
