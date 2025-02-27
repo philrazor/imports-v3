@@ -1,52 +1,35 @@
 {% extends 'coreApp/base.html' %}
 {% load static %}
-{% block content %}
-<section>
-    <div class="image-slider">
-        <div class="slider-content">
-            <img id="slider-image" src="{% static 'images/image1.jpeg' %}" alt="Slider Image">
-            <div class="slider-text" id="slider-text">Order the best products</div>
-        </div>
-    </div>
-    <div id="image-urls" data-images='[
-        "{% static "images/image1.jpeg" %}",
-        "{% static "images/image2.jpeg" %}",
-        "{% static "images/image3.jpeg" %}",
-        "{% static "images/image4.jpeg" %}",
-        "{% static "images/image5.jpeg" %}",
-        "{% static "images/image6.jpeg" %}"
-    ]' data-texts='[
-        "Order the best products",
-        "We deliver worldwide",
-        "Quality car items",
-        "Best deals on auto parts",
-        "Fast shipping guaranteed",
-        "Find the perfect spare part"
-    ]'></div>
-</section>    
+{% block content %}  
 <main>
     <div class="main-content">
         main-content
     </div>
-    
+
     <div class="product-list">
         {% for product in products %}
             <div class="product-item">
-                <a href="{% url 'coreApp:detail' product.id %}"></a>
-                {% if product.images.all %}
-                    <img src="{{ product.images.first.image.url }}" alt="{{ product.product_name }}" class="product-image">
-                {% else %}
-                    <img src="{% static 'default_image.png' %}" alt="No image available" class="product-image">
-                {% endif %}
+                <a href="{% url 'coreApp:detail' product.id %}">
+                    {% if product.images.all %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.product_name }}" class="product-image">
+                    {% else %}
+                        <img src="{% static 'default_image.png' %}" alt="No image available" class="product-image">
+                    {% endif %}
+                </a>
                 <h2>{{ product.product_name }}</h2>
-                <p>Make: <span>{{ product.make.make_name }}</span></p>
-                <p>Model: <span>{{ product.model.model_name }}</span></p>
-                <p>Year: <span>{{ product.year }}</span></p>
-                <p>Price: <span>${{ product.price }}</span></p>
+                <p><strong>Make:</strong> <span>{{ product.make.make_name }}</span></p>
+                <p><strong>Model:</strong> <span>{{ product.model.model_name }}</span></p>
+                <p><strong>Year:</strong> <span>{{ product.year }}</span></p>
+                <p><strong>Price:</strong> <span>${{ product.price }}</span></p>
+
+                <div class="product-buttons">
+                    <a href="{% url 'coreApp:detail' product.id %}" class="btn more-details">More Details</a>
+                    <button class="btn reserve-item">Reserve Item</button>
+                </div>
             </div>
         {% endfor %}
     </div>
-       
 </main>
+
 
 {% endblock %}

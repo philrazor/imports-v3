@@ -4,8 +4,8 @@ from .models import Product
 from .forms import CustomUserCreationForm
 from django.http import JsonResponse
 
-def index(request):
-    products = Product.objects.all()[:10]
+def home(request):
+    products = Product.objects.all()[:8]
     context = {
         'products': products
     }
@@ -17,7 +17,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index')
+            return redirect('login_user')
     else:
         form = CustomUserCreationForm()
     return render(request, 'coreApp/register.html', {'form': form})
@@ -31,7 +31,7 @@ def login_user(request):
         
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('home')
         else:
             return JsonResponse({'error': 'Invalid credentials'})
     return render(request, 'coreApp/login_user.html')
@@ -59,6 +59,8 @@ def product_list(request):
 
 def detail(request, pk):
     part = Product.objects.get(pk=pk)
+    if part is None:
+        return JsonResponse({'error': 'Part not found'})
     return render(request, 'coreApp/detail.html', {'part': part})
 
 
