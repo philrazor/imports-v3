@@ -25,36 +25,32 @@
         </div>
         
         
-        <nav>
+        <div class="icons-container">
             <ul class="social-icons">
                 <li><a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok tiktok-icon"></i></a></li>
                 <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook facebook-icon"></i></a></li>
                 <li><a href="https://x.com" target="_blank"><i class="fab fa-x-twitter x-icon"></i></a></li>
                 <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram instagram-ico"></i></a></li>
             </ul>
-        </nav>
+        </div>
     </header>
     <div class="navigation">
-        {% if user.is_authenticated %}
         <ul class="nav-links">
-            <li><a href="#"><i class="fas fa-box"></i> Products</a></li>
-            <li><a href="#"><i class="fas fa-car"></i> Brands</a></li>
-            <li><a href="#"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{% url 'coreApp:product_list' %}"><i class="fas fa-box"></i> Products</a></li>
+            <li><a href="{% url 'coreApp:brands' %}"><i class="fas fa-car"></i> Brands</a></li>
+            <li><a href="{% url 'coreApp:finances' %}"><i class="fas fa-wallet"></i> Finances</a></li>
+            <li><a href="{% url 'coreApp:about' %}"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="{% url 'coreApp:contact' %}"><i class="fas fa-envelope"></i> Contact</a></li>
+    
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'coreApp:logout_user' %}" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'coreApp:login_user' %}" class="btn login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="{% url 'coreApp:register' %}" class="btn signup-btn"><i class="fas fa-user-plus"></i> Signup</a></li>
+            {% endif %}
         </ul>
-        {% else %}
-        <ul class="nav-links">
-            <li><a href="#"><i class="fas fa-box"></i> Products</a></li>
-            <li><a href="#"><i class="fas fa-car"></i> Brands</a></li>
-            <li><a href="#"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-            <li><a href="{% url 'coreApp:login_user' %}" class="btn login-btn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li><a href="{% url 'coreApp:register' %}" class="btn signup-btn"><i class="fas fa-user-plus"></i> Signup</a></li>
-        </ul>
-        {% endif %}
     </div>
+    
      
     {% block content %}
     {% endblock %}
