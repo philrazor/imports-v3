@@ -1,0 +1,51 @@
+{% extends 'coreApp/base.html' %}
+{% block content %}
+<div class="profile-container">
+    <h1>Delete Profile</h1>
+    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn delete-btn">Yes, Delete</button>
+        <a href="{% url 'coreApp:profile' %}" class="btn cancel-btn">Cancel</a>
+    </form>
+</div>
+
+<style>
+.profile-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #e74c3c;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #2980b9;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+</style>
+{% endblock %}

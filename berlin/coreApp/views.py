@@ -3,6 +3,9 @@ from django.contrib.auth import login, logout, authenticate
 from .models import Product
 from .forms import CustomUserCreationForm
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 def home(request):
     products = Product.objects.all()[:8]
@@ -68,4 +71,35 @@ def about(request):
 def contact(request):
     return render(request, 'coreApp/contact.html')
 
+
+
+
+@login_required
+def profile(request):
+    return render(request, 'coreApp/profile.html', {'user': request.user})
+
+@login_required
+def update_profile(request):
+    if request.method == "POST":
+        user = request.user
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.phone_number = request.POST.get('last_name', user.phone_number)
+        user.address = request.POST.get('address', user.address)
+        user.email = request.POST.get('email', user.email)
+        user.save()
+        messages.success(request, "Profile updated successfully!")
+        return redirect('coreApp:profile')
+
+    return render(request, 'coreApp/update_profile.html')
+
+@login_required
+def delete_profile(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()
+        messages.success(request, "Your account has been deleted.")
+        return redirect('coreApp:register')
+
+    return render(request, 'coreApp/delete_profile.html')
 

@@ -1,9 +1,10 @@
 {% extends 'coreApp/base.html' %}
 {% load static %}
+{% block title %}home{% endblock %}
 {% block content %}  
 <main>
     <div class="main-content">
-        main-content
+        <h2>welcome {{user.username}}</h2>
     </div>
 
     <div class="product-list">

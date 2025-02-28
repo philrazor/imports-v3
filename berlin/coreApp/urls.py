@@ -16,4 +16,7 @@ urlpatterns = [
     path('finances/', views.finances, name='finances'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('profile/', views.profile, name='profile'),  # ✅ Profile Page
+    path('profile/update/', views.update_profile, name='update_profile'),  # ✅ Update Profile
+    path('profile/delete/', views.delete_profile, name='delete_profile'),  # ✅ Delete Profile
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
