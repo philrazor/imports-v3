@@ -14,6 +14,36 @@ def home(request):
     }
     return render(request, 'coreApp/index.html' , context)
 
+from .models import Product, Make, Model
+
+def search_products(request):
+    query = request.GET.get('q', '')
+    make_filter = request.GET.get('make', '')
+    model = request.GET.get('model', '')
+
+    products = Product.objects.all()
+
+    if query:
+        products = products.filter(product_name__icontains=query)
+
+    if make_filter:
+        products = products.filter(make__make_name__icontains=make_filter)
+
+    if model:
+        products = products.filter(model__model_name__icontains=model_filter)
+
+    makes = Make.objects.all()
+    models = Model.objects.all()
+
+    return render(request, 'coreApp/search_results.html', {
+        'products': products,
+        'query': query,
+        'makes': makes,
+        'models': models,
+        'make_filter': make_filter,
+        'model_filter': model,
+    })
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)

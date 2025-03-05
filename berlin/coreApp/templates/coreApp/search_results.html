@@ -1,0 +1,27 @@
+{% extends 'coreApp/base.html' %}
+{% load static %}
+{% block title %}search results {% endblock %}
+{% block content %}
+
+<div class="product-results">
+    {% if products %}
+        {% for product in products %}
+            <div class="product-card">
+                {% if product.images.all %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.product_name }}" class="product-image">
+                    {% else %}
+                        <img src="{% static 'default_image.png' %}" alt="No image available" class="product-image">
+                    {% endif %}
+                <h3>{{ product.product_name }}</h3>
+                <p>Make: {{ product.make.make_name }}</p>
+                <p>Model: {{ product.model.model_name }}</p>
+                <p>Year: {{ product.year }}</p>
+                <p>Price: ${{ product.price }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
