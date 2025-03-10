@@ -6,12 +6,19 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.admin import templatetags
+from .forms import CustomerForm
+
+
 
 def home(request):
     products = Product.objects.all()[:8]
     context = {
         'products': products
     }
+
+    print("the template tags:" , templatetags)
+
     return render(request, 'coreApp/index.html' , context)
 
 from .models import Product, Make, Model
@@ -30,7 +37,7 @@ def search_products(request):
         products = products.filter(make__make_name__icontains=make_filter)
 
     if model:
-        products = products.filter(model__model_name__icontains=model_filter)
+        products = products.filter(model__model_name__icontains=model)
 
     makes = Make.objects.all()
     models = Model.objects.all()
@@ -52,7 +59,7 @@ def register(request):
             login(request, user)
             return redirect('coreApp:login_user')
     else:
-        form = CustomUserCreationForm()
+        form = CustomUserCreationForm({"username": "philrazor" , "email":"pnjuguna.main@gmail.com"})
     return render(request, 'coreApp/register.html', {'form': form})
 
 def login_user(request):
@@ -133,3 +140,17 @@ def delete_profile(request):
 
     return render(request, 'coreApp/delete_profile.html')
 
+
+
+def testing_forms(request):
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            form = CustomerForm(request.POST)
+            context = {"form": form}
+            return render(request , "coreApp/customer_create.html", context)
+    form  = CustomerForm()
+    context = {"form": form}
+    return render(request , "coreApp/customer_create.html" ,context)
