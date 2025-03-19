@@ -11,9 +11,17 @@ class CustomUserCreationForm(UserCreationForm):
 from django import forms
 
 class CustomerForm(forms.Form):
-    customer_fname = forms.CharField(max_length=200, label="First Name")
-    customer_mname = forms.CharField(max_length=200, label="Middle Name", required=False)  # Middle name is optional
-    customer_lname = forms.CharField(max_length=200, label="Last Name")
-    customer_phone = forms.CharField(max_length=15, label="Phone Number")  # Use CharField for phone numbers
-    customer_password1 = forms.CharField(max_length=200, label="Password", widget=forms.PasswordInput())
-    customer_password2 = forms.CharField(max_length=200, label="Confirm Password", widget=forms.PasswordInput())
+    # customer_fname = forms.CharField(max_length=200, label="First Name")
+    # customer_mname = forms.CharField(max_len=200, label="Middle Name", required=False)  # Middle name is optional
+    # customer_lname = forms.CharField(max_len=200, label="Last Name")
+    # customer_phone = forms.CharField(max_len=15, label="Phone Number")  # Use CharField for phone numbers
+    # customer_password1 = forms.CharField(max_length=200, label="Password", widget=forms.PasswordInput())
+    # customer_password2 = forms.CharField(max_len=200, label="Confirm Password", widget=forms.PasswordInput())
+    pass
+
+
+class ContactForm(forms.Form):
+    sender = forms.EmailField(label="email")
+    subject = forms.CharField()
+    message = forms.Textarea()
+    

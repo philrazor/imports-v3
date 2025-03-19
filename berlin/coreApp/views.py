@@ -2,19 +2,21 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .models import Product
 from .forms import CustomUserCreationForm
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.admin import templatetags
-from .forms import CustomerForm
+from .forms import CustomerForm , ContactForm
 
 
 
 def home(request):
     products = Product.objects.all()[:8]
+    form_test = ContactForm()
     context = {
-        'products': products
+        'products': products ,
+        'form_test': form_test
     }
 
     print("the template tags:" , templatetags)
@@ -142,15 +144,9 @@ def delete_profile(request):
 
 
 
-def testing_forms(request):
+def form_page_test(request):
     if request.method == "POST":
-        form = CustomerForm(request.POST)
+        form = ContactForm(request.POST)
+        print(form)
         if form.is_valid():
-            form.save()
-        else:
-            form = CustomerForm(request.POST)
-            context = {"form": form}
-            return render(request , "coreApp/customer_create.html", context)
-    form  = CustomerForm()
-    context = {"form": form}
-    return render(request , "coreApp/customer_create.html" ,context)
+            return HttpResponse("successfully updated info")
