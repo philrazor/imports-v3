@@ -1,5 +1,5 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django import forms 
+from django.contrib.auth.forms import UserCreationForm  
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
@@ -25,3 +25,5 @@ class ContactForm(forms.Form):
     subject = forms.CharField()
     message = forms.Textarea()
     
+class Details():
+    pass

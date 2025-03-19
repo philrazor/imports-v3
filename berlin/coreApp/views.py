@@ -149,4 +149,5 @@ def form_page_test(request):
         form = ContactForm(request.POST)
         print(form)
         if form.is_valid():
+            messages.success(request,"updated succssesfully")
             return HttpResponse("successfully updated info")
